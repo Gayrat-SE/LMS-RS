@@ -1,11 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_web_view.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -39,6 +35,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -47,16 +44,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: SafeArea(
+        body:  const SafeArea(
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              FlutterFlowWebView(
-                content: 'https://lms.rahimovschool.uz',
-                height: 764.28,
-                verticalScroll: false,
-                horizontalScroll: false,
+              Expanded(
+                child: FlutterFlowWebView(
+                  content: 'https://lms.rahimovschool.uz',
+                
+                  verticalScroll: false,
+                  horizontalScroll: false,
+                ),
               ),
             ],
           ),
