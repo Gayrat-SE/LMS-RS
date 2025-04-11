@@ -51,7 +51,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             children: [
               Expanded(
                 child: FlutterFlowWebView(
-                  content: 'https://parent.rahimovschool.uz',
+                  content: 'https://lms.rahimovschool.uz',
                 
                   verticalScroll: false,
                   horizontalScroll: false,
