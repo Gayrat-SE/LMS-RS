@@ -17,23 +17,42 @@ class HomePageWidget extends StatefulWidget {
   State<HomePageWidget> createState() => _HomePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _HomePageWidgetState extends State<HomePageWidget>
+    with WidgetsBindingObserver {
   late HomePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late final WebViewXController _controller;
+  bool _isControllerInitialized = false;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
+    // Register the observer for app lifecycle changes
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
+    // Unregister the observer
+    WidgetsBinding.instance.removeObserver(this);
     _model.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    // When app is resumed from background
+    if (state == AppLifecycleState.resumed && _isControllerInitialized) {
+      // Reload the WebView
+      WidgetsBinding.instance.addPostFrameCallback((v) {
+        _controller.reload();
+      });
+    }
   }
 
   @override
@@ -44,7 +63,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-       
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
@@ -52,7 +70,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: RefreshIndicator(
             onRefresh: () async {
               await _controller.reload();
-              setState(() {});
+          
             },
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -61,8 +79,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   child: FlutterFlowWebView(
                     onCreated: (controller) async {
                       _controller = controller;
+                      _isControllerInitialized = true;
                       await _controller.reload();
-                      setState(() {});
                     },
                     content: 'https://lms.rahimovschool.uz',
                     verticalScroll: false,
