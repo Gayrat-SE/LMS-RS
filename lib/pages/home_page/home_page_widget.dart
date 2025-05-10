@@ -1,3 +1,5 @@
+import 'package:webviewx_plus/webviewx_plus.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_web_view.dart';
@@ -19,6 +21,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   late HomePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late final WebViewXController _controller;
 
   @override
   void initState() {
@@ -35,29 +38,39 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+       
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body:  const SafeArea(
+        body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: FlutterFlowWebView(
-                  content: 'https://lms.rahimovschool.uz',
-                
-                  verticalScroll: false,
-                  horizontalScroll: false,
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await _controller.reload();
+              setState(() {});
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: FlutterFlowWebView(
+                    onCreated: (controller) async {
+                      _controller = controller;
+                      await _controller.reload();
+                      setState(() {});
+                    },
+                    content: 'https://lms.rahimovschool.uz',
+                    verticalScroll: false,
+                    horizontalScroll: false,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
