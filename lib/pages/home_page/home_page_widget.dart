@@ -67,28 +67,22 @@ class _HomePageWidgetState extends State<HomePageWidget>
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
           top: true,
-          child: RefreshIndicator(
-            onRefresh: () async {
-              await _controller.reload();
-          
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: FlutterFlowWebView(
-                    onCreated: (controller) async {
-                      _controller = controller;
-                      _isControllerInitialized = true;
-                      await _controller.reload();
-                    },
-                    content: 'https://lms.rahimovschool.uz',
-                    verticalScroll: false,
-                    horizontalScroll: false,
-                  ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: FlutterFlowWebView(
+                  onCreated: (controller) async {
+                    _controller = controller;
+                    _isControllerInitialized = true;
+                    await _controller.reload();
+                  },
+                  content: 'https://lms.rahimovschool.uz',
+                  verticalScroll: false,
+                  horizontalScroll: false,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
