@@ -1,13 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:lms_rs/firebase_options.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
+
+  FirebaseMessaging.instance.requestPermission();
 
   runApp(const MyApp());
 }
