@@ -21,6 +21,7 @@ class FlutterFlowWebView extends StatefulWidget {
     this.horizontalScroll = false,
     this.verticalScroll = false,
     this.html = false,
+    required this.onCreated,
   });
 
   final String content;
@@ -30,6 +31,7 @@ class FlutterFlowWebView extends StatefulWidget {
   final bool horizontalScroll;
   final bool verticalScroll;
   final bool html;
+  final Function(WebViewXController controller) onCreated;
 
   @override
   _FlutterFlowWebViewState createState() => _FlutterFlowWebViewState();
@@ -57,6 +59,7 @@ class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
                 controller.connector.platform as AndroidWebViewController;
             await androidController.setOnShowFileSelector(_androidFilePicker);
           }
+          widget.onCreated(controller);
         },
         navigationDelegate: (request) async {
           if (isAndroid) {

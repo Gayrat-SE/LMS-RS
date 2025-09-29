@@ -1,0 +1,2 @@
+/Users/bekzodfluttergmail.com/PROEJECTS/LMS-RS/android/app/.cxx/RelWithDebInfo/55p2d5v1/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/bekzodfluttergmail.com/PROEJECTS/LMS-RS/android/app/.cxx/RelWithDebInfo/55p2d5v1/armeabi-v7a/CMakeFiles/rebuild_cache.dir
