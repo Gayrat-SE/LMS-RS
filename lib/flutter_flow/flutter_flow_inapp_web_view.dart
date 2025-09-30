@@ -4,12 +4,12 @@ import 'package:permission_handler/permission_handler.dart';
 
 class FlutterFlowInAppWebView extends StatefulWidget {
   const FlutterFlowInAppWebView({
-    Key? key,
+    super.key,
     required this.content,
     this.onCreated,
     this.verticalScroll = true,
     this.horizontalScroll = true,
-  }) : super(key: key);
+  });
 
   final String content;
   final Function(InAppWebViewController)? onCreated;
