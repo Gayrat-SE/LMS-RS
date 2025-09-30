@@ -45,15 +45,16 @@ class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
         height: widget.height ?? MediaQuery.sizeOf(context).height,
         ignoreAllGestures: false,
         initialContent: widget.content,
-        initialMediaPlaybackPolicy:
-            AutoMediaPlaybackPolicy.requireUserActionForAllMediaTypes,
+        initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.alwaysAllow,
         initialSourceType: widget.html
             ? SourceType.html
             : widget.bypass
                 ? SourceType.urlBypass
                 : SourceType.url,
         javascriptMode: JavascriptMode.unrestricted,
+        
         onWebViewCreated: (controller) async {
+        
           if (controller.connector is WebViewController && isAndroid) {
             final androidController =
                 controller.connector.platform as AndroidWebViewController;
@@ -80,7 +81,7 @@ class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
           webAllowFullscreenContent: true,
         ),
         mobileSpecificParams: MobileSpecificParams(
-          debuggingEnabled: false,
+          debuggingEnabled: true,
           gestureNavigationEnabled: true,
           mobileGestureRecognizers: {
             if (widget.verticalScroll)
@@ -94,6 +95,7 @@ class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
           },
           androidEnableHybridComposition: true,
         ),
+        userAgent: 'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
       );
 
   Key get webviewKey => Key(

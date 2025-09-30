@@ -1,9 +1,9 @@
-import 'package:webviewx_plus/webviewx_plus.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_web_view.dart';
+import '/flutter_flow/flutter_flow_inapp_web_view.dart';
+import '/flutter_flow/webview_permission_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -22,7 +22,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
   late HomePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late final WebViewXController _controller;
+  InAppWebViewController? _controller;
   bool _isControllerInitialized = false;
 
   @override
@@ -49,7 +49,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
     if (state == AppLifecycleState.resumed && _isControllerInitialized) {
       // Reload the WebView
       WidgetsBinding.instance.addPostFrameCallback((v) {
-        _controller.reload();
+        _controller?.reload();
       });
     }
   }
@@ -70,11 +70,17 @@ class _HomePageWidgetState extends State<HomePageWidget>
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: FlutterFlowWebView(
+                child: FlutterFlowInAppWebView(
                   onCreated: (controller) async {
                     _controller = controller;
                     _isControllerInitialized = true;
-                    await _controller.reload();
+
+                    // Request and configure WebView permissions
+                    await WebViewPermissionHelper
+                        .requestAndConfigurePermissions();
+
+                    debugPrint(
+                        "InAppWebView created and configured for microphone access");
                   },
                   content: 'https://lms.rahimovschool.uz',
                   verticalScroll: false,
