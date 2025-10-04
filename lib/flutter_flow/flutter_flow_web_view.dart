@@ -40,6 +40,7 @@ class FlutterFlowWebView extends StatefulWidget {
 class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
   @override
   Widget build(BuildContext context) => WebViewX(
+      
         key: webviewKey,
         width: widget.width ?? MediaQuery.sizeOf(context).width,
         height: widget.height ?? MediaQuery.sizeOf(context).height,

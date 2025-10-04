@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'lms-rs-firebase.firebasestorage.app',
     iosBundleId: 'com.mycompany.lmsrs',
   );
+
 }

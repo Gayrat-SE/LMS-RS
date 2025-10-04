@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:lms_rs/firebase_options.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/fcm_token_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +18,12 @@ void main() async {
   usePathUrlStrategy();
 
   await FirebaseMessaging.instance.requestPermission();
+  await FirebaseMessaging.instance.getAPNSToken();
 
   await Permission.microphone.request();
+
+  // FCM token refresh listener'ni sozlash
+  FCMTokenHelper.setupTokenRefreshListener();
 
   runApp(const MyApp());
 }

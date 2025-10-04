@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'fcm_token_helper.dart';
+import 'api_request_logger.dart';
 
 class FlutterFlowInAppWebView extends StatefulWidget {
   const FlutterFlowInAppWebView({
@@ -88,15 +90,35 @@ class _FlutterFlowInAppWebViewState extends State<FlutterFlowInAppWebView> {
       onLoadStop: (controller, url) async {
         debugPrint("WebView finished loading: $url");
 
+        // FCM tokenni olish va inject qilish
+        final fcmToken = await FCMTokenHelper.getFCMToken();
+
+        if (fcmToken != null) {
+          // FCM tokenni webview ichiga inject qilish (faqat login endpoint uchun)
+          await controller.evaluateJavascript(
+            source: FCMTokenHelper.getTokenInjectionJS(fcmToken),
+          );
+          debugPrint("✅ FCM Token injected into WebView for LOGIN endpoint");
+          debugPrint("📱 Token: $fcmToken");
+        } else {
+          debugPrint("⚠️ FCM Token is null, skipping injection");
+        }
+
+        // API Request Logger'ni inject qilish
+        await controller.evaluateJavascript(
+          source: APIRequestLogger.getRequestLoggerJS(),
+        );
+        debugPrint("✅ API Request Logger injected into WebView");
+
         // Inject JavaScript to handle getUserMedia
         await controller.evaluateJavascript(source: '''
           (function() {
             // Override getUserMedia to provide better error handling
             const originalGetUserMedia = navigator.mediaDevices.getUserMedia;
-            
+
             navigator.mediaDevices.getUserMedia = function(constraints) {
               console.log('getUserMedia called with constraints:', JSON.stringify(constraints));
-              
+
               return originalGetUserMedia.call(this, constraints)
                 .then(function(stream) {
                   console.log('Microphone/Camera access granted successfully');
@@ -107,7 +129,7 @@ class _FlutterFlowInAppWebViewState extends State<FlutterFlowInAppWebView> {
                   throw error;
                 });
             };
-            
+
             console.log('WebView media permission handler initialized');
           })();
         ''');
