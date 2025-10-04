@@ -20,7 +20,6 @@ void main() async {
 
   // Firebase Messaging permission
   await FirebaseMessaging.instance.requestPermission();
-  await FirebaseMessaging.instance.getAPNSToken();
 
   // Microphone permission
   await Permission.microphone.request();
@@ -41,6 +40,10 @@ void main() async {
 
   // FCM token refresh listener'ni sozlash
   FCMTokenHelper.setupTokenRefreshListener();
+
+  // FCM tokenni olish va log qilish
+  final token = await FCMTokenHelper.getFCMToken();
+  debugPrint('Initial FCM Token: $token');
 
   runApp(const MyApp());
 }
