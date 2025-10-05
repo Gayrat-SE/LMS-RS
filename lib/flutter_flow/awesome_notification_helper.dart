@@ -27,21 +27,10 @@ class AwesomeNotificationHelper {
       debug: true,
     );
 
-    // Request notification permissions
-    await requestPermissions();
 
-    // Set up notification listeners
     setupListeners();
   }
 
-  /// Request notification permissions
-  static Future<bool> requestPermissions() async {
-    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
-    if (!isAllowed) {
-      isAllowed = await AwesomeNotifications().requestPermissionToSendNotifications();
-    }
-    return isAllowed;
-  }
 
   /// Setup notification action listeners
   static void setupListeners() {
