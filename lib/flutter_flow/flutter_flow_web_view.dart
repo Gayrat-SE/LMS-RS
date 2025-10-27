@@ -43,8 +43,7 @@ class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
         height: widget.height ?? MediaQuery.sizeOf(context).height,
         ignoreAllGestures: false,
         initialContent: widget.content,
-        initialMediaPlaybackPolicy:
-            AutoMediaPlaybackPolicy.requireUserActionForAllMediaTypes,
+        initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.alwaysAllow,
         initialSourceType: widget.html
             ? SourceType.html
             : widget.bypass

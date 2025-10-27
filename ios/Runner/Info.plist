@@ -19,6 +19,18 @@
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>This app requires access to your photo library to upload and select images.</string>
 
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs access to the microphone for recording audio.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires microphone access to capture audio.</string>
+    <key>NSAllowsArbitraryLoadsInWebContent</key>
+    <true/>
+    <key>WKWebViewConfiguration</key>
+    <dict>
+        <key>allowsInlineMediaPlayback</key>
+        <true/>
+    </dict>
+
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
